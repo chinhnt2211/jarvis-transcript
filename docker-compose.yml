@@ -1,0 +1,24 @@
+version: '3'
+services:
+  redis: 
+    image: redislabs/redismod
+    container_name: "jarvis_redis"
+    ports:
+      - "6379:6379"
+  web:
+    image: "jarvis_webserver"
+    build:
+      dockerfile: Dockerfile
+    container_name: "jarvis_webserver"
+    ports:
+      - "5000:5000"
+    restart: always
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  db_data:
